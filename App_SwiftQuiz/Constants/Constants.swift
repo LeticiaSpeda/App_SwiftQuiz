@@ -17,4 +17,8 @@ enum Constants {
     enum QuestionView: String {
         case timeLabel = "Tempo restante:"
     }
+    
+    enum ResultView: String {
+        case titleResult = "Resultado"
+    }
 }

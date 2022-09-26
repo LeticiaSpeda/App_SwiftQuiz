@@ -9,10 +9,11 @@ import UIKit
 
 final class HomeScreenViewController: UIViewController {
     
-    
     //MARK: Components
     private lazy var homeImage: UIImageView = {
-        let image = UIImage(named: Constants.HomeScreen.imageLauchescreen.rawValue)
+        let image = UIImage(
+            named: Constants.HomeScreen.imageLauchescreen.rawValue
+        )
         let view = UIImageView(image: image)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleToFill
@@ -20,11 +21,12 @@ final class HomeScreenViewController: UIViewController {
         return view
     }()
     
-    
     private lazy var starButton: UIButton = {
         let button = UIButton()
         button.setTitle(Constants.HomeScreen.buttonHome.rawValue, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 45, weight: .semibold)
+        button.titleLabel?.font = UIFont.systemFont(
+            ofSize: 45, weight: .semibold
+        )
         button.addTarget(self, action: #selector(handle), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button

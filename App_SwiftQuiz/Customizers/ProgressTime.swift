@@ -9,24 +9,15 @@ import UIKit
 
 final class loadTime: UIView {
     
-//        var colorFirst: UIColor
-    var colorSecond: UIColor
+    //MARK: - Components
+    var color: UIColor
     var titleTime: String
     var titleTimeColor: UIColor
     
-   
-    
-    private lazy var loadBackgroundView: UIView = {
-        let view = UIView()
-//            view.backgroundColor = colorFirst
-        view.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        return view
-    }()
-    
     private lazy var progressView: UIView = {
         let view = UIView()
-        view.backgroundColor = colorSecond
-        view.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = color
         return view
     }()
     
@@ -38,43 +29,56 @@ final class loadTime: UIView {
         return label
     }()
     
-    init(
-//            colorFirst: UIColor,
-        colorSecond: UIColor,
-        titleTime: String,
-        titleTimeColor: UIColor
-    ) {
-//            self.colorFirst = colorFirst
-        self.colorSecond = colorSecond
+    private func commonInit() {
+        configureHierarchy()
+        configureConstraints()
+        configureStyle()
+    }
+    
+    //MARK: - Construtor
+    init(color: UIColor, titleTime: String, titleTimeColor: UIColor) {
+        self.color = color
         self.titleTime = titleTime
         self.titleTimeColor = titleTimeColor
         super.init(frame: .zero)
-        commonInit()
+        configureHierarchy()
+        configureConstraints()
+        configureStyle()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func commonInit() {
-        configureHierarchy()
-        configureConstraints()
-        configureStyle()
-    }
+    //MARK: - Helpers
     private func configureHierarchy() {
-//            addSubview(loadBackgroundView)
-//            loadBackgroundView.
         addSubview(progressView)
         progressView.addSubview(timeLabel)
     }
     
     private func configureConstraints() {
         NSLayoutConstraint.activate([
+            progressView.topAnchor.constraint(
+                equalTo: topAnchor
+            ),
+            progressView.bottomAnchor.constraint(
+                equalTo: bottomAnchor
+            ),
+            progressView.leadingAnchor.constraint(
+                equalTo: leadingAnchor
+            ),
             
-            heightAnchor.constraint(equalToConstant: 50),
-            timeLabel.topAnchor.constraint(equalTo: progressView.topAnchor, constant: 16),
-            timeLabel.leadingAnchor.constraint(equalTo: progressView.leadingAnchor, constant: 10)
+            timeLabel.centerYAnchor.constraint(
+                equalTo: progressView.centerYAnchor
+            ),
+            timeLabel.leadingAnchor.constraint(
+                equalTo: progressView.leadingAnchor, constant: 10
+            ),
         ])
+    }
+    
+    func performTimer(_ size: CGFloat = .zero) {
+        progressView.frame.size.width = size
     }
     
     private func configureStyle() {

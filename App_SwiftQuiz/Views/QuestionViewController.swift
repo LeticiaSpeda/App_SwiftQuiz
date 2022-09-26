@@ -9,31 +9,10 @@ import UIKit
 
 final class QuestionViewController: UIViewController {
     
+    //MARK: Components
     let quizManager = QuizManager()
     
-    //MARK: Components
-    private lazy var loadBackgroundView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .gray.withAlphaComponent(0.2)
-        return view
-    }()
-    
-    private lazy var progressView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = #colorLiteral(red: 0.8472319841, green: 0.2042682469, blue: 0.003129100427, alpha: 1)
-        return view
-    }()
-    
-    private lazy var timeLabel: UILabel = {
-        let label = UILabel()
-        label.text = Constants.QuestionView.timeLabel.rawValue
-        label.textColor = .yellow
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
+    private lazy var loadTime: loadTime = .init(color: #colorLiteral(red: 0.8511558771, green: 0.0146553712, blue: 0.004988920875, alpha: 1), titleTime: Constants.QuestionView.timeLabel.rawValue, titleTimeColor: #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1))
     
     private lazy var selectionView: UIView = {
         let view = UIView()
@@ -55,8 +34,8 @@ final class QuestionViewController: UIViewController {
     private lazy var questionLabel: UILabel = {
         let label = UILabel()
         label.text = " "
-        label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
-        label.numberOfLines = 6
+        label.font = UIFont.systemFont(ofSize: 26, weight: .regular)
+        label.numberOfLines = 7
         label.textAlignment = .center
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -80,13 +59,14 @@ final class QuestionViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        progressView.frame.size.width = view.frame.size.width
-        UIView.animate(withDuration: 20) {
-            self.progressView.frame.size.width = .zero
-        } completion: { [weak self] _ in
-            self?.showResults()
-        }
+        loadTime.performTimer(view.frame.size.width)
         getNewQuiz()
+        UIView.animate(withDuration: 20) {
+            self.loadTime.performTimer()
+        } completion: { isComplete in
+            guard isComplete else { return }
+            self.showResults()
+        }
     }
     
     private func makeButton(title: String) -> UIButton {
@@ -103,7 +83,6 @@ final class QuestionViewController: UIViewController {
     }
     
     private func getNewQuiz() {
-        
         quizManager.refreshQuiz()
         questionLabel.text = quizManager.question
         
@@ -124,7 +103,6 @@ final class QuestionViewController: UIViewController {
     
     //MARK: Helpers
     private func commonInit() {
-        
         btnAnswers = [
             makeButton(title: "Title01"),
             makeButton(title: "Title02"),
@@ -137,8 +115,6 @@ final class QuestionViewController: UIViewController {
     }
     
     private func configureHierarchy() {
-        progressView.addSubview(timeLabel)
-        loadBackgroundView.addSubview(progressView)
         selectionView.addSubview(mainVStack)
         
         mainVStack.addArrangedSubview(btnAnswers[0])
@@ -147,40 +123,46 @@ final class QuestionViewController: UIViewController {
         mainVStack.addArrangedSubview(btnAnswers[3])
         
         view.addSubview(selectionView)
-        view.addSubview(loadBackgroundView)
-        
+        view.addSubview(loadTime)
         view.addSubview(questionLabel)
     }
     
     private func configureConstrainst() {
         NSLayoutConstraint.activate([
-            loadBackgroundView.topAnchor.constraint(equalTo: view.topAnchor,constant: 70),
-            loadBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            loadBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            loadBackgroundView.heightAnchor.constraint(equalToConstant: 50),
+            loadTime.topAnchor.constraint(equalTo: view.topAnchor,constant: 70),
+            loadTime.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            loadTime.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            loadTime.heightAnchor.constraint(equalToConstant: 50),
             
-            
-            progressView.topAnchor.constraint(equalTo: loadBackgroundView.topAnchor),
-            progressView.bottomAnchor.constraint(equalTo: loadBackgroundView.bottomAnchor),
-            
-            
-            
-            timeLabel.centerYAnchor.constraint(equalTo: progressView.centerYAnchor),
-            timeLabel.leadingAnchor.constraint(equalTo: progressView.leadingAnchor, constant: 10),
-            
-            questionLabel.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 10),
-            questionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            questionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            questionLabel.bottomAnchor.constraint(equalTo: selectionView.topAnchor, constant: -10),
+            questionLabel.topAnchor.constraint(
+                equalTo: loadTime.bottomAnchor, constant: 10
+            ),
+            questionLabel.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor, constant: 10
+            ),
+            questionLabel.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor, constant: -10
+            ),
+            questionLabel.bottomAnchor.constraint(
+                equalTo: selectionView.topAnchor, constant: -10
+            ),
             
             selectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -50),
             selectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             selectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            mainVStack.topAnchor.constraint(equalTo: selectionView.topAnchor, constant: 10),
-            mainVStack.leadingAnchor.constraint(equalTo: selectionView.leadingAnchor, constant: 10),
-            mainVStack.trailingAnchor.constraint(equalTo: selectionView.trailingAnchor, constant: -10),
-            mainVStack.bottomAnchor.constraint(equalTo: selectionView.bottomAnchor, constant: -10),
+            mainVStack.topAnchor.constraint(
+                equalTo: selectionView.topAnchor, constant: 10
+            ),
+            mainVStack.leadingAnchor.constraint(
+                equalTo: selectionView.leadingAnchor, constant: 10
+            ),
+            mainVStack.trailingAnchor.constraint(
+                equalTo: selectionView.trailingAnchor, constant: -10
+            ),
+            mainVStack.bottomAnchor.constraint(
+                equalTo: selectionView.bottomAnchor, constant: -10
+            ),
             
             btnAnswers[0].heightAnchor.constraint(equalToConstant: 50),
             btnAnswers[1].heightAnchor.constraint(equalToConstant: 50),
@@ -188,5 +170,4 @@ final class QuestionViewController: UIViewController {
             btnAnswers[3].heightAnchor.constraint(equalToConstant: 50),
         ])
     }
-    
 }

@@ -14,7 +14,7 @@ final class ResultViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Resultado"
+        label.text = Constants.ResultView.titleResult.rawValue
         label.textColor = .black
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 50, weight: .bold)
@@ -59,9 +59,8 @@ final class ResultViewController: UIViewController {
         return label
     }()
     
-    
     private lazy var resultTotal: UILabel = {
-        let score = totalCorrectAnswers * 100 / totalAnwers
+        let score = (totalCorrectAnswers * 100) / totalAnwers
         let label = UILabel()
         label.text = "\(score)%"
         label.textColor = .black

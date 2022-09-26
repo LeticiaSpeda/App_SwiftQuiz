@@ -18,7 +18,6 @@
 		E0B35BEB28D148DF00C6F79B /* QuizManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B35BEA28D148DF00C6F79B /* QuizManager.swift */; };
 		E0B35BF028D1559400C6F79B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B35BEF28D1559400C6F79B /* Constants.swift */; };
 		E0F290B928D1676B008C2BBF /* ProgressTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F290B828D1676B008C2BBF /* ProgressTime.swift */; };
-		E0F290BB28D3AA58008C2BBF /* ButtonOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F290BA28D3AA57008C2BBF /* ButtonOptions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,7 +34,6 @@
 		E0B35BEA28D148DF00C6F79B /* QuizManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizManager.swift; sourceTree = "<group>"; };
 		E0B35BEF28D1559400C6F79B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E0F290B828D1676B008C2BBF /* ProgressTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressTime.swift; sourceTree = "<group>"; };
-		E0F290BA28D3AA57008C2BBF /* ButtonOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonOptions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,7 +71,7 @@
 				E0B35BEC28D154FF00C6F79B /* Views */,
 				E0B35BED28D1551E00C6F79B /* LogicQuiz */,
 				E0B35BEE28D1556900C6F79B /* Constants */,
-				E0B35BF128D166BC00C6F79B /* Components */,
+				E0B35BF128D166BC00C6F79B /* Customizers */,
 				E0838B0228CFEBBD00B39F92 /* LaunchScreen.storyboard */,
 				E0838B0528CFEBBD00B39F92 /* Info.plist */,
 			);
@@ -124,13 +122,12 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
-		E0B35BF128D166BC00C6F79B /* Components */ = {
+		E0B35BF128D166BC00C6F79B /* Customizers */ = {
 			isa = PBXGroup;
 			children = (
 				E0F290B828D1676B008C2BBF /* ProgressTime.swift */,
-				E0F290BA28D3AA57008C2BBF /* ButtonOptions.swift */,
 			);
-			path = Components;
+			path = Customizers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,7 +200,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E0F290BB28D3AA58008C2BBF /* ButtonOptions.swift in Sources */,
 				E0838B1028D020AA00B39F92 /* ResultViewController.swift in Sources */,
 				E0838AFC28CFEBBB00B39F92 /* HomeScreenViewController.swift in Sources */,
 				E0B35BE928D1462D00C6F79B /* Quiz.swift in Sources */,

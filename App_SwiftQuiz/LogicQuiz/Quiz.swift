@@ -9,11 +9,12 @@ import UIKit
 
 final class Quiz {
     
+    //MARK: - Components
     let question: String
     let options: [String]
     private let correctAnswer: String
     
-    
+    //MARK: - Construtor
     init(question: String, options: [String], correctAnswer: String) {
         self.question = question
         self.options = options
